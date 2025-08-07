@@ -30,8 +30,8 @@ public class RoomService {
 
     public RoomResponseDTO getById(Long roomId) {
         return roomMapper.toResponseDTO(roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("Room with ID " + roomId + " not found.")
-        ));
+                .orElseThrow(() -> new ResourceNotFoundException("Room with ID " + roomId + " not found."))
+        );
     }
 
     public RoomAvailabilityResponseDTO getAvailableRoom(RoomAvailabilityRequestDTO roomAvailabilityRequestDTO) {
