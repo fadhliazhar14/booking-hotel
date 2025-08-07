@@ -20,7 +20,15 @@ import java.util.List;
 public class RoomAmenityController {
     private final RoomAmenityService roomAmenityService;
 
-    @GetMapping("room/{room-id}")
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<RoomAmenityResponseDTO>>> getAllRoomAmenities() {
+        List<RoomAmenityResponseDTO> roomAmenities = roomAmenityService.getAll();
+        ApiResponse<List<RoomAmenityResponseDTO>> response = ApiResponse.success("Success", roomAmenities);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/room/{roomId}")
     public ResponseEntity<ApiResponse<List<RoomAmenityResponseDTO>>> getRoomAmenitiesByRoomId(@PathVariable Long roomId) {
         List<RoomAmenityResponseDTO> roomAmenities = roomAmenityService.getByRoomId(roomId);
         ApiResponse<List<RoomAmenityResponseDTO>> response = ApiResponse.success("Success", roomAmenities);
@@ -50,10 +58,18 @@ public class RoomAmenityController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteRoomAmenity(@PathVariable Long id) {
         roomAmenityService.deleteById(id);
         ApiResponse<Void> response = ApiResponse.success("Room amenity deleted successfully", null);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/room/{roomId}")
+    public ResponseEntity<ApiResponse<Void>> deleteAllRoomAmenityByRoomId(@PathVariable Long roomId) {
+        roomAmenityService.deleteAllByRoomId(roomId);
+        ApiResponse<Void> response = ApiResponse.success("Room amenities with room ID " + roomId + " deleted successfully", null);
 
         return ResponseEntity.ok(response);
     }

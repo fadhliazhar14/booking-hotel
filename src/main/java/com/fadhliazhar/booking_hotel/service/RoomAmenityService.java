@@ -7,6 +7,8 @@ import com.fadhliazhar.booking_hotel.exception.ResourceNotFoundException;
 import com.fadhliazhar.booking_hotel.mapper.RoomAmenityMapper;
 import com.fadhliazhar.booking_hotel.model.RoomAmenity;
 import com.fadhliazhar.booking_hotel.repository.RoomAmenityRepository;
+import com.fadhliazhar.booking_hotel.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,12 @@ import java.util.List;
 @Service
 public class RoomAmenityService {
     private final RoomAmenityRepository roomAmenityRepository;
+    private final RoomRepository roomRepository;
     private final RoomAmenityMapper roomAmenityMapper;
+
+    public List<RoomAmenityResponseDTO> getAll() {
+        return roomAmenityMapper.toResponseDTOs(roomAmenityRepository.findAll());
+    }
 
     public List<RoomAmenityResponseDTO> getByRoomId(Long roomId) {
         return roomAmenityMapper.toResponseDTOs(roomAmenityRepository.findByRoomId(roomId));
@@ -24,12 +31,17 @@ public class RoomAmenityService {
 
     public RoomAmenityResponseDTO getById (Long roomAmenityId) {
         return roomAmenityMapper.toResponseDTO(roomAmenityRepository.findById(roomAmenityId)
-                .orElseThrow(() -> new ResourceNotFoundException("Room amenity with " + roomAmenityId + " not found."))
+                .orElseThrow(() -> new ResourceNotFoundException("Room amenity with ID " + roomAmenityId + " not found."))
         );
     }
 
     public RoomAmenityResponseDTO create(RoomAmenityRequestDTO requestedRoomAmenity) {
-        boolean roomAmenityExist = roomAmenityRepository.existByAmenityAndRoomId(requestedRoomAmenity.getAmenity(), requestedRoomAmenity.getRoomId());
+        boolean roomExists = roomRepository.existsById(requestedRoomAmenity.getRoomId());
+        if (!roomExists) {
+            throw new ResourceNotFoundException("Room with ID " + requestedRoomAmenity.getRoomId() + " not found.");
+        }
+
+        boolean roomAmenityExist = roomAmenityRepository.existsByAmenityAndRoomId(requestedRoomAmenity.getAmenity(), requestedRoomAmenity.getRoomId());
         if (roomAmenityExist) {
             throw new BusinessValidationException("Room number " + requestedRoomAmenity.getAmenity() + " already exists.");
         }
@@ -41,11 +53,21 @@ public class RoomAmenityService {
     }
 
     public void deleteById(Long roomAmenityId) {
-        boolean roomAmenityExist = roomAmenityRepository.existById(roomAmenityId);
+        boolean roomAmenityExist = roomAmenityRepository.existsById(roomAmenityId);
         if (!roomAmenityExist) {
-            throw new ResourceNotFoundException("Room amenity with " + roomAmenityId + " not found.");
+            throw new ResourceNotFoundException("Room amenity with ID" + roomAmenityId + " not found.");
         }
 
         roomAmenityRepository.deleteById(roomAmenityId);
+    }
+
+    @Transactional
+    public void deleteAllByRoomId(Long roomId) {
+        boolean roomAmenityExist = roomAmenityRepository.existsByRoomId(roomId);
+        if (!roomAmenityExist) {
+            throw new ResourceNotFoundException("Room amenity with room ID " + roomId + " is not exists.");
+        }
+
+        roomAmenityRepository.deleteAllByRoomId(roomId);
     }
 }

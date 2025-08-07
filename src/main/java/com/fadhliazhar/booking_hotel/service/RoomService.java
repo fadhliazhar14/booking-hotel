@@ -9,7 +9,9 @@ import com.fadhliazhar.booking_hotel.exception.ResourceNotFoundException;
 import com.fadhliazhar.booking_hotel.mapper.RoomMapper;
 import com.fadhliazhar.booking_hotel.model.BookingStatus;
 import com.fadhliazhar.booking_hotel.model.Room;
+import com.fadhliazhar.booking_hotel.repository.RoomAmenityRepository;
 import com.fadhliazhar.booking_hotel.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
+    private final RoomAmenityRepository roomAmenityRepository;
     private final RoomMapper roomMapper;
 
     public List<RoomResponseDTO> getAll() {
@@ -72,10 +75,16 @@ public class RoomService {
         return roomMapper.toResponseDTO(savedRoom);
     }
 
+    @Transactional
     public void deleteById(Long roomId) {
         boolean roomExists = roomRepository.existsById(roomId);
         if (!roomExists) {
             throw new ResourceNotFoundException("Room with ID " + roomId + " not found.");
+        }
+
+        boolean roomAmenityExist = roomAmenityRepository.existsByRoomId(roomId);
+        if (roomAmenityExist) {
+            roomAmenityRepository.deleteAllByRoomId(roomId);
         }
 
         roomRepository.deleteById(roomId);

@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface RoomAmenityRepository extends JpaRepository<RoomAmenity, Long> {
     List<RoomAmenity> findByRoomId(@NonNull Long roomId);
-    boolean existByAmenityAndRoomId(Amenity amenity, @NonNull Long roomId);
-    boolean existById(@NonNull Long roomAmenityId);
+    boolean existsByAmenityAndRoomId(Amenity amenity, @NonNull Long roomId);
+    boolean existsByRoomId(@NonNull Long roomId);
+    void deleteAllByRoomId(@NonNull Long roomId);
 }
