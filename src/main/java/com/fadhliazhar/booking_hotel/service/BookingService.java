@@ -9,6 +9,8 @@ import com.fadhliazhar.booking_hotel.mapper.BookingMapper;
 import com.fadhliazhar.booking_hotel.model.Booking;
 import com.fadhliazhar.booking_hotel.model.BookingStatus;
 import com.fadhliazhar.booking_hotel.repository.BookingRepository;
+import com.fadhliazhar.booking_hotel.repository.RoomServiceRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ import java.util.List;
 @Service
 public class BookingService {
     private final BookingRepository bookingRepository;
-
+    private final RoomServiceRepository roomServiceRepository;
     private final BookingMapper bookingMapper;
 
     public List<BookingResponseDTO> getAll() {
@@ -72,10 +74,16 @@ public class BookingService {
         );
     }
 
+    @Transactional
     public void deleteById(Long bookingId) {
         boolean bookingExist = bookingRepository.existsById(bookingId);
         if (!bookingExist) {
             throw new ResourceNotFoundException("Booking with ID " + bookingId + " not found.");
+        }
+
+        boolean roomServiceExists = roomServiceRepository.existsByBookingId(bookingId);
+        if (roomServiceExists) {
+            roomServiceRepository.deleteAllByBookingId(bookingId);
         }
 
         bookingRepository.deleteById(bookingId);

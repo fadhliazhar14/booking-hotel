@@ -43,7 +43,7 @@ public class RoomAmenityService {
 
         boolean roomAmenityExist = roomAmenityRepository.existsByAmenityAndRoomId(requestedRoomAmenity.getAmenity(), requestedRoomAmenity.getRoomId());
         if (roomAmenityExist) {
-            throw new BusinessValidationException("Room number " + requestedRoomAmenity.getAmenity() + " already exists.");
+            throw new BusinessValidationException("Room amenity " + requestedRoomAmenity.getAmenity() + "with room ID " + requestedRoomAmenity.getRoomId() + " already exists.");
         }
 
         RoomAmenity roomAmenityEntity = roomAmenityMapper.toEntity(requestedRoomAmenity);
@@ -63,8 +63,8 @@ public class RoomAmenityService {
 
     @Transactional
     public void deleteAllByRoomId(Long roomId) {
-        boolean roomAmenityExist = roomAmenityRepository.existsByRoomId(roomId);
-        if (!roomAmenityExist) {
+        boolean roomAmenityExists = roomAmenityRepository.existsByRoomId(roomId);
+        if (!roomAmenityExists) {
             throw new ResourceNotFoundException("Room amenity with room ID " + roomId + " is not exists.");
         }
 
