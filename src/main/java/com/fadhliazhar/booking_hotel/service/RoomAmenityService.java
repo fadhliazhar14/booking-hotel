@@ -43,7 +43,7 @@ public class RoomAmenityService {
 
         boolean roomAmenityExist = roomAmenityRepository.existsByAmenityAndRoomId(requestedRoomAmenity.getAmenity(), requestedRoomAmenity.getRoomId());
         if (roomAmenityExist) {
-            throw new BusinessValidationException("Room amenity " + requestedRoomAmenity.getAmenity() + "with room ID " + requestedRoomAmenity.getRoomId() + " already exists.");
+            throw new BusinessValidationException("Room amenity " + requestedRoomAmenity.getAmenity() + " with room ID " + requestedRoomAmenity.getRoomId() + " already exists.");
         }
 
         RoomAmenity roomAmenityEntity = roomAmenityMapper.toEntity(requestedRoomAmenity);
