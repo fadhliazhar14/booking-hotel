@@ -41,9 +41,9 @@ public class RoomAmenityService {
             throw new ResourceNotFoundException("Room with ID " + requestedRoomAmenity.getRoomId() + " not found.");
         }
 
-        boolean roomAmenityExist = roomAmenityRepository.existsByAmenityAndRoomId(requestedRoomAmenity.getAmenity(), requestedRoomAmenity.getRoomId());
+        boolean roomAmenityExist = roomAmenityRepository.existsByAmenityTypeIdAndRoomId(requestedRoomAmenity.getAmenityTypeId(), requestedRoomAmenity.getRoomId());
         if (roomAmenityExist) {
-            throw new BusinessValidationException("Room amenity " + requestedRoomAmenity.getAmenity() + " with room ID " + requestedRoomAmenity.getRoomId() + " already exists.");
+            throw new BusinessValidationException("Room amenity type ID " + requestedRoomAmenity.getAmenityTypeId() + " with room ID " + requestedRoomAmenity.getRoomId() + " already exists.");
         }
 
         RoomAmenity roomAmenityEntity = roomAmenityMapper.toEntity(requestedRoomAmenity);

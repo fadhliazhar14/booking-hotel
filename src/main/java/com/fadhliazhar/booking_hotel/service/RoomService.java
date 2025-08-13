@@ -7,12 +7,13 @@ import com.fadhliazhar.booking_hotel.dto.room.RoomResponseDTO;
 import com.fadhliazhar.booking_hotel.exception.BusinessValidationException;
 import com.fadhliazhar.booking_hotel.exception.ResourceNotFoundException;
 import com.fadhliazhar.booking_hotel.mapper.RoomMapper;
-import com.fadhliazhar.booking_hotel.model.BookingStatus;
 import com.fadhliazhar.booking_hotel.model.Room;
 import com.fadhliazhar.booking_hotel.repository.RoomAmenityRepository;
 import com.fadhliazhar.booking_hotel.repository.RoomRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import static com.fadhliazhar.booking_hotel.config.CacheConfig.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class RoomService {
         return roomMapper.toResponseDTOs(roomRepository.findAll(Sort.by("roomNumber")));
     }
 
+@Cacheable(value = ROOMS_CACHE, key = "'all'")
     public RoomResponseDTO getById(Long roomId) {
         return roomMapper.toResponseDTO(roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with ID " + roomId + " not found."))
@@ -42,11 +44,11 @@ public class RoomService {
                 roomAvailabilityRequestDTO.getNumberOfAdults(),
                 roomAvailabilityRequestDTO.getNumberOfChildren(),
                 roomAvailabilityRequestDTO.getCheckInDate(),
-                roomAvailabilityRequestDTO.getCheckOutDate(),
-                BookingStatus.CANCELED
+                roomAvailabilityRequestDTO.getCheckOutDate()
         );
 
-        return availableRoom.map(roomMapper::toRoomAvailabilityResponseDTO).orElseThrow(() -> new ResourceNotFoundException("No available room"));
+        return availableRoom.map(roomMapper::toRoomAvailabilityResponseDTO)
+                .orElseThrow(() -> new ResourceNotFoundException("No available room found for the specified criteria"));
     }
 
     public RoomResponseDTO create(RoomRequestDTO requestedRoom) {

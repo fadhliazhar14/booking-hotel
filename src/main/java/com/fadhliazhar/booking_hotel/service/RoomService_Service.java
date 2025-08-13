@@ -6,7 +6,6 @@ import com.fadhliazhar.booking_hotel.exception.ResourceNotFoundException;
 import com.fadhliazhar.booking_hotel.mapper.RoomServiceMapper;
 import com.fadhliazhar.booking_hotel.model.RoomService;
 import com.fadhliazhar.booking_hotel.repository.BookingRepository;
-import com.fadhliazhar.booking_hotel.repository.RoomRepository;
 import com.fadhliazhar.booking_hotel.repository.RoomServiceRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

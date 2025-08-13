@@ -20,8 +20,8 @@ public class RoomMapper {
         dto.setRoomPrice(room.getRoomPrice());
         dto.setAdultCapacity(room.getAdultCapacity());
         dto.setChildrenCapacity(room.getChildrenCapacity());
-        dto.setCreatedOn(room.getCreatedOn());
-        dto.setUpdatedOn(room.getUpdatedOn());
+        dto.setCreatedOn(room.getCreatedAt());
+        dto.setUpdatedOn(room.getUpdatedAt());
 
         return dto;
     }

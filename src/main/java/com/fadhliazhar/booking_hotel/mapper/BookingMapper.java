@@ -4,13 +4,20 @@ import com.fadhliazhar.booking_hotel.dto.booking.BookingRequestDTO;
 import com.fadhliazhar.booking_hotel.dto.booking.BookingResponseDTO;
 import com.fadhliazhar.booking_hotel.model.Booking;
 import com.fadhliazhar.booking_hotel.model.BookingStatus;
+import com.fadhliazhar.booking_hotel.repository.RoomRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class BookingMapper {
+    private final RoomRepository roomRepository;
+
     public BookingResponseDTO toResponseDTO(Booking booking) {
         BookingResponseDTO dto = new BookingResponseDTO();
         dto.setId(booking.getId());
@@ -23,6 +30,18 @@ public class BookingMapper {
         dto.setNight(booking.getNight());
         dto.setRoomId(booking.getRoomId());
         dto.setBookingStatus(booking.getBookingStatus());
+
+        // Fetch room number based on roomId
+        if (booking.getRoomId() != null) {
+            try {
+                Integer roomNumber = roomRepository.findRoomNumberById(booking.getRoomId());
+                dto.setRoomNumber(roomNumber);
+            } catch (Exception e) {
+                log.warn("Failed to fetch room number for room ID {} for booking {}: {}",
+                        booking.getRoomId(), booking.getId(), e.getMessage());
+                dto.setRoomNumber(null);
+            }
+        }
 
         return dto;
     }

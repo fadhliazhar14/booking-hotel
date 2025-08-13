@@ -16,5 +16,6 @@ public class BookingResponseDTO {
     private Integer childrenCapacity;
     private Integer night;
     private Long roomId;
+    private Integer roomNumber;
     private BookingStatus bookingStatus;
 }
