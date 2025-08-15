@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Management System - Dokumentasi Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .code-block {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .api-endpoint {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .api-method {
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .architecture-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .layer {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 200px;
+        }
+        
+        .arrow {
+            font-size: 2rem;
+            color: #667eea;
+            margin: 0 1rem;
+        }
+        
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏨 Hotel Booking Management System</h1>
+            <p class="subtitle">Sistem Manajemen Pemesanan Hotel Enterprise dengan Spring Boot 3.5.4</p>
+        </header>
+        
+        <nav class="nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#features">Fitur Utama</a></li>
+                <li><a href="#architecture">Arsitektur</a></li>
+                <li><a href="#tech-stack">Teknologi</a></li>
+                <li><a href="#api">API Documentation</a></li>
+                <li><a href="#security">Keamanan</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+                <li><a href="#testing">Testing</a></li>
+            </ul>
+        </nav>
+        
+        <section id="overview" class="section">
+            <h2>📋 Overview Project</h2>
+            <p>Hotel Booking Management System adalah aplikasi enterprise-grade yang dibangun dengan Spring Boot 3.5.4 dan pola arsitektur modern. Sistem ini menyediakan solusi komprehensif untuk manajemen pemesanan hotel dengan fitur keamanan OAuth2, caching Redis, dan monitoring yang lengkap.</p>
+            
+            <div class="info">
+                <strong>Status Project:</strong> Production Ready ✅<br>
+                <strong>Versi:</strong> 0.0.1-SNAPSHOT<br>
+                <strong>Java Version:</strong> 17<br>
+                <strong>Spring Boot:</strong> 3.5.4
+            </div>
+            
+            <h3>🎯 Tujuan Project</h3>
+            <ul>
+                <li>Menyediakan sistem pemesanan hotel yang aman dan scalable</li>
+                <li>Implementasi best practices dalam enterprise application development</li>
+                <li>Integrasi dengan sistem autentikasi terpusat (OAuth2)</li>
+                <li>Optimasi performa dengan multi-tier caching strategy</li>
+                <li>Monitoring dan observability yang komprehensif</li>
+            </ul>
+        </section>
+        
+        <section id="features" class="section">
+            <h2>🌟 Fitur Utama</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🔐 Keamanan & Autentikasi</h4>
+                    <ul>
+                        <li>OAuth2 Resource Server dengan JWT</li>
+                        <li>Role-based Access Control (USER, ADMIN)</li>
+                        <li>Integrasi dengan AuthServer terpusat</li>
+                        <li>Validasi token otomatis</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🏨 Manajemen Booking</h4>
+                    <ul>
+                        <li>Lifecycle booking lengkap (BOOKED → CHECKED_IN → CHECKED_OUT)</li>
+                        <li>Pengecekan ketersediaan kamar real-time</li>
+                        <li>Pencegahan konflik booking overlapping</li>
+                        <li>Kontrol akses berdasarkan user</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🛏️ Manajemen Kamar</h4>
+                    <ul>
+                        <li>CRUD operations dengan validasi</li>
+                        <li>Manajemen tipe kamar dinamis</li>
+                        <li>Sistem amenity dan service types</li>
+                        <li>Kalkulasi kapasitas otomatis</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📊 Fitur Advanced</h4>
+                    <ul>
+                        <li>Pagination, sorting & search</li>
+                        <li>Redis caching multi-tier</li>
+                        <li>Error handling komprehensif</li>
+                        <li>Audit logging dengan correlation ID</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🚀 Performance & Scalability</h4>
+                    <ul>
+                        <li>Database connection pooling</li>
+                        <li>Query optimization dengan JPA</li>
+                        <li>Lazy loading strategies</li>
+                        <li>Efficient data transfer dengan DTO</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📈 Monitoring & Observability</h4>
+                    <ul>
+                        <li>Spring Boot Actuator</li>
+                        <li>Custom health indicators</li>
+                        <li>Metrics dan performance monitoring</li>
+                        <li>Structured logging</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="architecture" class="section">
+            <h2>🏗️ Arsitektur Sistem</h2>
+            
+            <div class="architecture-diagram">
+                <div class="layer">Controller Layer<br><small>REST API Endpoints</small></div>
+                <div class="arrow">↓</div>
+                <div class="layer">Service Layer<br><small>Business Logic</small></div>
+                <div class="arrow">↓</div>
+                <div class="layer">Repository Layer<br><small>Data Access</small></div>
+                <div class="arrow">↓</div>
+                <div class="layer">Database Layer<br><small>MySQL Database</small></div>
+            </div>
+            
+            <h3>📁 Struktur Project</h3>
+            <div class="code-block">
+                <code>
+booking-hotel/
+├── 📁 src/main/java/com/fadhliazhar/booking_hotel/
+│   ├── 📁 controller/          # REST API endpoints
+│   ├── 📁 service/             # Business logic layer
+│   ├── 📁 repository/          # Data access layer
+│   ├── 📁 model/               # JPA entities
+│   ├── 📁 dto/                 # Data transfer objects
+│   ├── 📁 config/              # Configuration classes
+│   ├── 📁 security/            # Security components
+│   ├── 📁 exception/           # Exception handling
+│   ├── 📁 util/                # Utility classes
+│   └── 📁 mapper/              # MapStruct mappers
+├── 📁 src/main/resources/
+│   ├── 📁 db/migration/        # Flyway migrations
+│   ├── application.properties  # Base configuration
+│   ├── application-dev.properties   # Development config
+│   └── application-prod.properties  # Production config
+├── 📁 src/test/java/           # Comprehensive tests
+├── 📁 docs/                    # Documentation
+├── 📁 scripts/                 # Deployment scripts
+├── 🐳 Dockerfile              # Container configuration
+├── 🚂 railway.json            # Railway deployment config
+└── 📦 pom.xml                 # Maven dependencies
+                </code>
+            </div>
+            
+            <h3>🔄 Design Patterns</h3>
+            <ul>
+                <li><strong>Clean Architecture:</strong> Pemisahan layer yang jelas</li>
+                <li><strong>Repository Pattern:</strong> Abstraksi data access</li>
+                <li><strong>DTO Pattern:</strong> Data transfer optimization</li>
+                <li><strong>Dependency Injection:</strong> Loose coupling dengan Spring IoC</li>
+                <li><strong>Builder Pattern:</strong> Object construction yang fleksibel</li>
+            </ul>
+        </section>
+        
+        <section id="tech-stack" class="section">
+            <h2>💻 Technology Stack</h2>
+            
+            <h3>🔧 Backend Framework</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">Spring Boot 3.5.4</span>
+                <span class="tech-badge">Spring Security</span>
+                <span class="tech-badge">Spring Data JPA</span>
+                <span class="tech-badge">Spring Cache</span>
+                <span class="tech-badge">Spring Validation</span>
+            </div>
+            
+            <h3>🗄️ Database & Caching</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">MySQL 8.0</span>
+                <span class="tech-badge">Redis</span>
+                <span class="tech-badge">Flyway Migration</span>
+                <span class="tech-badge">HikariCP</span>
+            </div>
+            
+            <h3>🔒 Security & Authentication</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">OAuth2 Resource Server</span>
+                <span class="tech-badge">JWT Tokens</span>
+                <span class="tech-badge">Spring Security</span>
+            </div>
+            
+            <h3>📚 Documentation & API</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">OpenAPI 3.0</span>
+                <span class="tech-badge">Swagger UI</span>
+                <span class="tech-badge">SpringDoc</span>
+            </div>
+            
+            <h3>🧪 Testing</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">JUnit 5</span>
+                <span class="tech-badge">Mockito</span>
+                <span class="tech-badge">TestContainers</span>
+                <span class="tech-badge">Spring Boot Test</span>
+            </div>
+            
+            <h3>🛠️ Development Tools</h3>
+            <div class="tech-stack">
+                <span class="tech-badge">Maven</span>
+                <span class="tech-badge">Lombok</span>
+                <span class="tech-badge">MapStruct</span>
+                <span class="tech-badge">Docker</span>
+            </div>
+        </section>
+        
+        <section id="api" class="section">
+            <h2>📡 API Documentation</h2>
+            
+            <div class="info">
+                <strong>Base URL Development:</strong> http://localhost:8080/api/v1<br>
+                <strong>Base URL Production:</strong> https://booking-hotel-production.up.railway.app/api/v1<br>
+                <strong>Swagger UI:</strong> /swagger-ui.html<br>
+                <strong>OpenAPI JSON:</strong> /api-docs
+            </div>
+            
+            <h3>🔑 Authentication</h3>
+            <p>Semua endpoint API memerlukan autentikasi melalui JWT Bearer token yang diperoleh dari OAuth2 authorization server.</p>
+            
+            <div class="code-block">
+                <code>
+# Contoh request dengan authentication
+curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+     -H "Content-Type: application/json" \
+     https://your-api-url/api/v1/bookings
+                </code>
+            </div>
+            
+            <h3>📋 Main Endpoints</h3>
+            
+            <div class="api-endpoint">
+                <span class="api-method">GET</span> /api/v1/bookings
+                <p>Mendapatkan daftar booking dengan pagination dan filtering</p>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="api-method">POST</span> /api/v1/bookings
+                <p>Membuat booking baru dengan validasi business rules</p>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="api-method">GET</span> /api/v1/bookings/{id}
+                <p>Mendapatkan detail booking berdasarkan ID</p>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="api-method">PUT</span> /api/v1/bookings/{id}/status
+                <p>Update status booking (BOOKED → CHECKED_IN → CHECKED_OUT)</p>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="api-method">GET</span> /api/v1/rooms
+                <p>Mendapatkan daftar kamar dengan availability checking</p>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="api-method">GET</span> /api/v1/rooms/available
+                <p>Mencari kamar yang tersedia berdasarkan tanggal</p>
+            </div>
+        </section>
+        
+        <section id="security" class="section">
+            <h2>🔒 Keamanan Sistem</h2>
+            
+            <h3>🛡️ OAuth2 Resource Server</h3>
+            <ul>
+                <li>Integrasi dengan authorization server eksternal</li>
+                <li>Validasi JWT token secara otomatis</li>
+                <li>Refresh token mechanism</li>
+                <li>Token expiration handling</li>
+            </ul>
+            
+            <h3>👥 Role-Based Access Control</h3>
+            <ul>
+                <li><strong>USER:</strong> Dapat mengakses dan mengelola booking sendiri</li>
+                <li><strong>ADMIN:</strong> Dapat mengakses semua booking dan mengelola sistem</li>
+            </ul>
+            
+            <h3>🔐 Security Features</h3>
+            <ul>
+                <li>CORS configuration untuk cross-origin requests</li>
+                <li>CSRF protection untuk state-changing operations</li>
+                <li>Input validation dan sanitization</li>
+                <li>SQL injection prevention dengan JPA</li>
+                <li>Secure headers configuration</li>
+            </ul>
+            
+            <div class="warning">
+                <strong>⚠️ Security Best Practices:</strong><br>
+                - Selalu gunakan HTTPS di production<br>
+                - Jangan expose sensitive information di logs<br>
+                - Implementasikan rate limiting<br>
+                - Regular security audit dan dependency updates
+            </div>
+        </section>
+        
+        <section id="deployment" class="section">
+            <h2>🚀 Deployment</h2>
+            
+            <h3>🐳 Docker Deployment</h3>
+            <div class="code-block">
+                <code>
+# Build Docker image
+docker build -t booking-hotel .
+
+# Run container
+docker run -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=prod \
+  -e DATABASE_URL=your_db_url \
+  -e REDIS_URL=your_redis_url \
+  booking-hotel
+                </code>
+            </div>
+            
+            <h3>🚂 Railway Deployment</h3>
+            <p>Project ini sudah dikonfigurasi untuk deployment di Railway dengan file <code>railway.json</code>:</p>
+            <div class="code-block">
+                <code>
+# Deploy ke Railway
+railway login
+railway link
+railway up
+                </code>
+            </div>
+            
+            <h3>⚙️ Environment Variables</h3>
+            <ul>
+                <li><code>SPRING_PROFILES_ACTIVE</code>: Profile aktif (dev/prod)</li>
+                <li><code>DATABASE_URL</code>: URL koneksi database MySQL</li>
+                <li><code>REDIS_URL</code>: URL koneksi Redis server</li>
+                <li><code>JWT_ISSUER_URI</code>: URI OAuth2 authorization server</li>
+                <li><code>CORS_ALLOWED_ORIGINS</code>: Domain yang diizinkan untuk CORS</li>
+            </ul>
+            
+            <h3>📊 Health Checks</h3>
+            <p>Sistem menyediakan health check endpoints untuk monitoring:</p>
+            <ul>
+                <li><code>/actuator/health</code>: Overall application health</li>
+                <li><code>/actuator/health/db</code>: Database connectivity</li>
+                <li><code>/actuator/health/redis</code>: Redis connectivity</li>
+                <li><code>/actuator/metrics</code>: Application metrics</li>
+            </ul>
+        </section>
+        
+        <section id="testing" class="section">
+            <h2>🧪 Testing Strategy</h2>
+            
+            <h3>📋 Test Coverage</h3>
+            <ul>
+                <li><strong>Unit Tests:</strong> Service layer dan utility classes</li>
+                <li><strong>Integration Tests:</strong> Controller dan repository layer</li>
+                <li><strong>End-to-End Tests:</strong> Complete user workflows</li>
+                <li><strong>Security Tests:</strong> Authentication dan authorization</li>
+            </ul>
+            
+            <h3>🐳 TestContainers</h3>
+            <p>Menggunakan TestContainers untuk testing dengan database dan Redis yang real:</p>
+            <div class="code-block">
+                <code>
+# Menjalankan tests
+mvn test
+
+# Test dengan coverage report
+mvn test jacoco:report
+
+# Integration tests only
+mvn test -Dtest="*IntegrationTest"
+                </code>
+            </div>
+            
+            <h3>🎯 Test Categories</h3>
+            <ul>
+                <li><strong>BookingServiceTest:</strong> Business logic validation</li>
+                <li><strong>BookingIntegrationTest:</strong> End-to-end booking flow</li>
+                <li><strong>SecurityTest:</strong> Authentication dan authorization</li>
+                <li><strong>CacheTest:</strong> Redis caching functionality</li>
+            </ul>
+        </section>
+        
+        <section class="section">
+            <h2>📈 Performance & Monitoring</h2>
+            
+            <h3>⚡ Performance Optimizations</h3>
+            <ul>
+                <li><strong>Multi-tier Redis Caching:</strong> Cache dengan TTL berbeda untuk data yang berbeda</li>
+                <li><strong>Database Connection Pooling:</strong> HikariCP untuk optimal connection management</li>
+                <li><strong>Lazy Loading:</strong> JPA lazy loading untuk mengurangi query yang tidak perlu</li>
+                <li><strong>Pagination:</strong> Efficient data retrieval dengan Spring Data pagination</li>
+            </ul>
+            
+            <h3>📊 Monitoring Tools</h3>
+            <ul>
+                <li><strong>Spring Boot Actuator:</strong> Built-in monitoring endpoints</li>
+                <li><strong>Custom Metrics:</strong> Business-specific metrics</li>
+                <li><strong>Structured Logging:</strong> JSON format untuk easy parsing</li>
+                <li><strong>Correlation IDs:</strong> Request tracing across services</li>
+            </ul>
+        </section>
+        
+        <section class="section">
+            <h2>🔮 Future Enhancements</h2>
+            
+            <h3>📋 Roadmap Phase 2</h3>
+            <ul>
+                <li><strong>Event-Driven Architecture:</strong> Implement domain events untuk loose coupling</li>
+                <li><strong>Microservices Migration:</strong> Split menjadi focused services</li>
+                <li><strong>Advanced Analytics:</strong> Business intelligence integration</li>
+                <li><strong>Real-time Features:</strong> WebSocket untuk live updates</li>
+                <li><strong>Mobile API:</strong> Mobile-optimized endpoints</li>
+            </ul>
+            
+            <h3>🛠️ Technical Improvements</h3>
+            <ul>
+                <li><strong>Test Coverage:</strong> Increase ke 90%+ coverage</li>
+                <li><strong>Performance Testing:</strong> Load testing dengan realistic data</li>
+                <li><strong>Security Audit:</strong> Third-party security assessment</li>
+                <li><strong>Advanced Monitoring:</strong> APM integration (New Relic, DataDog)</li>
+            </ul>
+        </section>
+        
+        <footer>
+            <p>&copy; 2024 Hotel Booking Management System</p>
+            <p>Dibangun dengan ❤️ menggunakan Spring Boot 3.5.4</p>
+            <p><strong>Developer:</strong> Fadhli Azhar | <strong>Version:</strong> 0.0.1-SNAPSHOT</p>
+        </footer>
+    </div>
+</body>
+</html>

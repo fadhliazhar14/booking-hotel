@@ -58,9 +58,11 @@ public class SecurityConfig {
                     
                     // API Documentation endpoints
                     .requestMatchers(HttpMethod.GET,
+                            "/api-docs",
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
-                            "/swagger-ui.html").permitAll()
+                            "/swagger-ui.html",
+                            "/api-docs/swagger-config").permitAll()
                     
                     // Room availability check (public for browsing)
                     .requestMatchers(HttpMethod.POST, "/api/v1/rooms/available-room").permitAll()

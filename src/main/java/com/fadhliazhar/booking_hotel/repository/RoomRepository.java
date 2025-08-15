@@ -19,12 +19,12 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query(value = """
             SELECT r.*
-            FROM room r
+            FROM rooms r
             WHERE r.adult_capacity >= :numberOfAdults
             AND (r.adult_capacity + r.children_capacity) >= (:numberOfAdults + :numberOfChildren)
             AND NOT EXISTS (
                 SELECT 1
-                FROM booking b
+                FROM bookings b
                 WHERE b.room_id = r.id
                 AND b.booking_status IN ('BOOKED', 'CHECKED_IN')
                 AND NOT (
