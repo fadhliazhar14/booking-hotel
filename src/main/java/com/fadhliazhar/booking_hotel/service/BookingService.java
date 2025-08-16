@@ -73,7 +73,7 @@ public class BookingService {
     /**
      * Get booking by ID
      */
-@Cacheable(value = BOOKINGS_CACHE, key = "#id")
+@Cacheable(value = BOOKING_DETAILS_CACHE, key = "#id")
     public BookingResponseDTO getById(Long id) {
         Booking booking = findBookingById(id);
         
@@ -93,7 +93,7 @@ public class BookingService {
      * Create new booking
      */
 @Caching(evict = {
-        @CacheEvict(value = BOOKINGS_CACHE, allEntries = true),
+        @CacheEvict(value = BOOKING_DETAILS_CACHE, allEntries = true),
         @CacheEvict(value = USER_BOOKINGS_CACHE, allEntries = true),
         @CacheEvict(value = AVAILABLE_ROOMS_CACHE, allEntries = true)
     })

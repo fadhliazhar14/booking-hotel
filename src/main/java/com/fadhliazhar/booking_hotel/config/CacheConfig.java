@@ -1,6 +1,9 @@
 package com.fadhliazhar.booking_hotel.config;
 
+import com.fadhliazhar.booking_hotel.dto.booking.BookingResponseDTO;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +17,8 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
@@ -37,7 +42,7 @@ public class CacheConfig {
 
     // Cache names constants
     public static final String ROOMS_CACHE = "rooms";
-    public static final String BOOKINGS_CACHE = "bookings";
+    public static final String BOOKING_DETAILS_CACHE = "bookingDetails";
     public static final String AVAILABLE_ROOMS_CACHE = "availableRooms";
     public static final String AMENITY_TYPES_CACHE = "amenityTypes";
     public static final String SERVICE_TYPES_CACHE = "serviceTypes";
@@ -90,9 +95,30 @@ public class CacheConfig {
         // Medium-lived caches (30 minutes) - moderately changing data
         cacheConfigurations.put(ROOMS_CACHE, 
             createCacheConfig(Duration.ofMinutes(30)));
-        cacheConfigurations.put(BOOKINGS_CACHE, 
-            createCacheConfig(Duration.ofMinutes(30)));
-        cacheConfigurations.put(ROOM_AMENITIES_CACHE, 
+
+
+        // Booking mapping
+        // Specific ObjectMapper untuk BookingResponseDTO
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.findAndRegisterModules();
+        objectMapper.activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.PROPERTY
+        );
+
+        Jackson2JsonRedisSerializer<BookingResponseDTO> serializer =
+                new Jackson2JsonRedisSerializer<>(objectMapper, BookingResponseDTO.class);
+
+        RedisCacheConfiguration bookingsCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
+                .entryTtl(Duration.ofMinutes(30));
+
+        cacheConfigurations.put(BOOKING_DETAILS_CACHE, bookingsCacheConfig);
+
+        cacheConfigurations.put(ROOM_AMENITIES_CACHE,
             createCacheConfig(Duration.ofMinutes(30)));
         cacheConfigurations.put(ROOM_SERVICES_CACHE, 
             createCacheConfig(Duration.ofMinutes(30)));
