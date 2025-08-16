@@ -62,6 +62,8 @@ public class SecurityConfig {
                             "/v3/api-docs/**",
                             "/swagger-ui/**",
                             "/swagger-ui.html",
+                            "/health",
+                            "/docs/project-documentation.html",
                             "/api-docs/swagger-config").permitAll()
                     
                     // Room availability check (public for browsing)
