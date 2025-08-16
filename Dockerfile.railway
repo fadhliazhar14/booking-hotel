@@ -1,0 +1,35 @@
+# Memory-optimized Dockerfile for Railway (1GB limit)
+FROM eclipse-temurin:17-jre-alpine
+
+# Set Railway environment
+ENV RAILWAY_ENVIRONMENT=true
+ENV SPRING_PROFILES_ACTIVE=railway
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S booking-hotel && \
+    adduser -S booking-hotel -u 1001 -G booking-hotel
+
+# Create app directory
+WORKDIR /app
+
+# Copy the jar file
+COPY target/booking-hotel-*.jar app.jar
+
+# Change ownership
+RUN chown booking-hotel:booking-hotel app.jar
+
+# Switch to non-root user
+USER booking-hotel
+
+# JVM Memory optimization for 1GB Railway limit
+ENV JAVA_OPTS="-Xms256m -Xmx768m -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UnlockExperimentalVMOptions -XX:+UseStringDeduplication -XX:+OptimizeStringConcat -Djava.security.egd=file:/dev/./urandom -Dspring.jmx.enabled=false -Dmanagement.metrics.export.prometheus.enabled=false"
+
+# Health check for Railway
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT:-8080}/actuator/health || exit 1
+
+# Expose port
+EXPOSE 8080
+
+# Run the application
+ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
