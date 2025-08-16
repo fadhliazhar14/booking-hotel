@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Integration tests for the complete booking workflow
- * Tests the interaction between all layers with real database and Redis
+ * Tests the interaction between all layers with real database
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
@@ -53,9 +53,7 @@ class BookingIntegrationTest {
             .withUsername("test")
             .withPassword("test");
 
-    @Container
-    static GenericContainer<?> redis = new GenericContainer<>("redis:7-alpine")
-            .withExposedPorts(6379);
+    // Redis container removed - using simple in-memory cache
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
@@ -65,9 +63,8 @@ class BookingIntegrationTest {
         registry.add("spring.datasource.password", mysql::getPassword);
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
         
-        // Redis configuration
-        registry.add("spring.data.redis.host", redis::getHost);
-        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
+        // Cache configuration (Simple Cache)
+        registry.add("spring.cache.type", () -> "simple");
         
         // OAuth2 test configuration (mock)
         registry.add("spring.security.oauth2.resourceserver.jwt.issuer-uri", 
