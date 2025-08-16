@@ -32,6 +32,7 @@ public class RoomService {
         return roomMapper.toResponseDTOs(roomRepository.findAll(Sort.by("roomNumber")));
     }
 
+@Cacheable(value = ROOMS_CACHE, key = "'all'")
     public RoomResponseDTO getById(Long roomId) {
         return roomMapper.toResponseDTO(roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room with ID " + roomId + " not found."))
