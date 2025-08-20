@@ -110,7 +110,7 @@ public class SecurityConfig {
         
         // Read from application properties for consistency
         String corsOrigins = System.getProperty("app.cors.allowed-origins", 
-                "http://localhost:3000,http://localhost:5173,https://dev.osacademy.net");
+                "http://localhost:3000,http://localhost:5173,https://dev.osacademy.net, https://fe-dms-tau.vercel.app");
         configuration.setAllowedOrigins(Arrays.asList(corsOrigins.split(",")));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
